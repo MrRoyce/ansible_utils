@@ -13,6 +13,7 @@
     - name: Set log message
       ansible.builtin.set_fact:
         log_message:
+          - "Get ansible version: {{ debug_param | default('No var added', boolean=true) }}"
           - "Ansible version: {{ ansible_output.stdout }}"
           - "Logged by: {{ lookup('env', 'USER') }}"
           - "JSON Output: | {{ json_output }}"
