@@ -3,21 +3,20 @@
   gather_facts: false
   tasks:
     - name: Get Ansible version
-      command: ansible --version
+      ansible.builtin.command: ansible --version
       register: ansible_output
 
     - name: Set JSON output variable
-      set_fact:
+      ansible.builtin.set_fact:
         json_output: "{{ ansible_output.stdout | to_nice_json(indent=2) }}"
 
     - name: Set log message
-      set_fact:
+      ansible.builtin.set_fact:
         log_message:
           - "Ansible version: {{ ansible_output.stdout }}"
           - "Logged by: {{ lookup('env', 'USER') }}"
-          - "JSON Output: |"
-          - "{{ json_output }}"
+          - "JSON Output: | {{ json_output }}"
 
     - name: Display log messages
-      debug:
+      ansible.builtin.debug:
         msg: "{{ log_message }}"
