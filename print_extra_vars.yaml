@@ -1,0 +1,8 @@
+---
+- name: Debug Array
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: host
+      debug: var=vars

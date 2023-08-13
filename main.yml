@@ -1,10 +1,14 @@
 - name: Log Ansible version
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   tasks:
     - name: Get Ansible version
       ansible.builtin.command: ansible --version
       register: ansible_output
+
+    - name: Get secret file contents
+      ansible.builtin.shell: "ansible-galaxy collection list"
+      register: collections_list
 
     - name: Set JSON output variable
       ansible.builtin.set_fact:
@@ -13,7 +17,7 @@
     - name: Set log message
       ansible.builtin.set_fact:
         log_message:
-          - "Get ansible version: {{ debug_param | default('No var added', boolean=true) }}"
+          - "Get collections: {{ collections_list | default('No collctions', boolean=true) }}"
           - "Ansible version: {{ ansible_output.stdout }}"
           - "Logged by: {{ lookup('env', 'USER') }}"
           - "JSON Output: | {{ json_output }}"
