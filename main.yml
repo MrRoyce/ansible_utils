@@ -4,8 +4,8 @@
   tasks:
     - name: Display {{ tower_job_id }}
       ansible.builtin.debug:
-        msg: '{{ {{ tower_job_id }}  }}'
+        msg: '{{ tower_job_id }}'
 
     - name: Display {{ awx_job_id }}
       ansible.builtin.debug:
-        msg: '{{ {{ awx_job_id }}  }}'
+        msg: '{{ awx_job_id  }}'
