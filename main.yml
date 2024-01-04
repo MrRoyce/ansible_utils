@@ -1,27 +1,11 @@
 - name: Log Ansible version
-  hosts: localhost
+  hosts: all
   gather_facts: true
   tasks:
-    - name: Get Ansible version
-      ansible.builtin.command: ansible --version
-      register: ansible_output
-
-    - name: Get secret file contents
-      ansible.builtin.shell: "ansible-galaxy collection list"
-      register: collections_list
-
-    - name: Set JSON output variable
-      ansible.builtin.set_fact:
-        json_output: "{{ ansible_output.stdout | to_nice_json(indent=2) }}"
-
-    - name: Set log message
-      ansible.builtin.set_fact:
-        log_message:
-          - "Get collections: {{ collections_list | default('No collctions', boolean=true) }}"
-          - "Ansible version: {{ ansible_output.stdout }}"
-          - "Logged by: {{ lookup('env', 'USER') }}"
-          - "JSON Output: | {{ json_output }}"
-
-    - name: Display log messages
+    - name: Display {{ tower_job_id }}
       ansible.builtin.debug:
-        msg: "{{ log_message }}"
+        msg: '{{ {{ tower_job_id }}  }}'
+
+    - name: Display {{ awx_job_id }}
+      ansible.builtin.debug:
+        msg: '{{ {{ awx_job_id }}  }}'
